@@ -73,7 +73,18 @@ local selected_colors = select_color(selected_flavor)
 
 return {
     default_prog = { '/usr/bin/fish', '-l' },
-    font_size = 14.0,
+    font_size = 16.0,
+    font = wezterm.font("JetBrains Mono", { weight = "Bold" }),
+    window_background_opacity = 1,
+
+    background = {
+	    {
+		    source = {
+			    File = "/home/ivan/Pictures/1378684.png",
+		    },
+		    hsb = { brightness = 0.05 },
+	    },
+    },
 
     colors = {
         background = selected_colors.base,
