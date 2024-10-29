@@ -89,13 +89,9 @@ local wallpapers = {
 Current_wallpaper_index = 1 -- Start at the first wallpaper
 
 -- Function to cycle wallpapers
-wezterm.on('cycle-wallpaper', function(window, pane)
+wezterm.on('cycle-wallpaper-fw', function(window, pane)
     local overrides = window:get_config_overrides() or {}
-    
-    -- Cycle the wallpaper index
     Current_wallpaper_index = (Current_wallpaper_index % #wallpapers) + 1
-    
-    -- Set the new wallpaper
     overrides.background = {
         {
             source = {
@@ -104,8 +100,20 @@ wezterm.on('cycle-wallpaper', function(window, pane)
             hsb = { brightness = 0.05 },
         },
     }
-    
-    -- Apply the new configuration
+    window:set_config_overrides(overrides)
+end)
+
+wezterm.on('cycle-wallpaper-bw', function(window, pane)
+    local overrides = window:get_config_overrides() or {}
+    Current_wallpaper_index = (Current_wallpaper_index % #wallpapers) - 1
+    overrides.background = {
+        {
+            source = {
+                File = "/home/ivan/.config/wezterm" .. wallpapers[Current_wallpaper_index],
+            },
+            hsb = { brightness = 0.05 },
+        },
+    }
     window:set_config_overrides(overrides)
 end)
 
@@ -157,9 +165,14 @@ return {
 
     keys = {
         {
-            key = 'e',
+            key = ']',
             mods = 'CTRL',
-            action = wezterm.action.EmitEvent 'cycle-wallpaper', -- Change this to cycle wallpapers
+            action = wezterm.action.EmitEvent 'cycle-wallpaper-fw',
+        },
+        {
+            key = '[',
+            mods = 'CTRL',
+            action = wezterm.action.EmitEvent 'cycle-wallpaper-bw',
         },
     },
 }
