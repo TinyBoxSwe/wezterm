@@ -86,7 +86,28 @@ local wallpapers = {
     "/8.jpeg",
 }
 
-Current_wallpaper_index = 7 -- Adjust if you want to start at a different wallpaper
+Current_wallpaper_index = 1 -- Start at the first wallpaper
+
+-- Function to cycle wallpapers
+wezterm.on('cycle-wallpaper', function(window, pane)
+    local overrides = window:get_config_overrides() or {}
+    
+    -- Cycle the wallpaper index
+    Current_wallpaper_index = (Current_wallpaper_index % #wallpapers) + 1
+    
+    -- Set the new wallpaper
+    overrides.background = {
+        {
+            source = {
+                File = "/home/ivan/.config/wezterm" .. wallpapers[Current_wallpaper_index],
+            },
+            hsb = { brightness = 0.05 },
+        },
+    }
+    
+    -- Apply the new configuration
+    window:set_config_overrides(overrides)
+end)
 
 return {
     default_prog = { '/usr/bin/fish', '-l' },
@@ -96,7 +117,7 @@ return {
     background = {
         {
             source = {
-                File = "/home/ivan/.config/wezterm" .. wallpapers[Current_wallpaper_index], -- Fix here
+                File = "/home/ivan/.config/wezterm" .. wallpapers[Current_wallpaper_index],
             },
             hsb = { brightness = 0.05 },
         },
@@ -132,5 +153,13 @@ return {
         },
 
         indexed = { [16] = selected_colors.peach, [17] = selected_colors.rosewater },
+    },
+
+    keys = {
+        {
+            key = 'e',
+            mods = 'CTRL',
+            action = wezterm.action.EmitEvent 'cycle-wallpaper', -- Change this to cycle wallpapers
+        },
     },
 }
