@@ -71,22 +71,31 @@ local selected_colors = select_color(selected_flavor)
 
 -- Define wallpapers
 local wallpapers = {
+    "/10.jpg",
+    "/11.jpg",
+    "/13.jpg",
     "/1.jpeg",
-    "/1.jpg",
     "/1.png",
-    "/2.jpeg",
     "/2.jpg",
-    "/3.jpeg",
     "/3.jpg",
-    "/4.jpeg",
     "/5.jpeg",
-    "/5.jpg",
     "/6.jpeg",
     "/7.png",
+    "/8.png",
+    "/10.png",
+    "/12.jpg",
+    "/14.jpg",
+    "/1.jpg",
+    "/2.jpeg",
+    "/3.jpeg",
+    "/4.jpeg",
+    "/5.jpg",
+    "/6.jpg",
     "/8.jpeg",
+    "/9.png",
 }
 
-Current_wallpaper_index = 1 -- Start at the first wallpaper
+Current_wallpaper_index = 10 -- Start at the first wallpaper
 
 -- Function to cycle wallpapers
 wezterm.on('cycle-wallpaper-fw', function(window, pane)
@@ -95,6 +104,7 @@ wezterm.on('cycle-wallpaper-fw', function(window, pane)
     overrides.background = {
         {
             source = {
+                -- TODO: change user to fit your own username
                 File = "/home/ivan/.config/wezterm" .. wallpapers[Current_wallpaper_index],
             },
             hsb = { brightness = 0.05 },
